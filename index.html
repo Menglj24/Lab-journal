@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab Journal</title>
+
+  <!-- 字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- 样式 -->
+  <link rel="stylesheet" href="style.css" />
+  <canvas id="particleCanvas" class="particle-layer"></canvas>
+</head>
+
+<body>
+    <!-- 🚀 启动动画层 -->
+<div id="bootScreen" class="boot-screen">
+  <div class="boot-content">
+    <div id="bootText" class="boot-text"></div>
+  </div>
+</div>
+<!-- 💫 数据流背景层 -->
+<canvas id="dataStream" class="data-stream-layer"></canvas>
+
+  <header class="app-header">
+    <h1 id="titleText">MLJ's Lab Journal <span class="cursor"></span></h1>
+  </header>
+
+  <main class="app-main">
+    <!-- 实验输入区 -->
+    <section id="inputSection" class="note-input">
+      <h2>🧫 新实验记录</h2>
+
+      <div class="field">
+        <label for="titleInput">实验标题</label>
+        <input id="expTitle" type="text" placeholder="输入实验标题..." />
+      </div>
+
+      <div class="field">
+        <label for="contentInput">实验内容</label>
+        <textarea id="expContent" rows="6" placeholder="记录实验步骤、结果或结论..."></textarea>
+      </div>
+    
+      <div class="field">
+        <label for="expTags">标签</label>
+        <input id="expTags" type="text" placeholder="输入标签（用逗号分隔）..." />
+      </div>
+<div class="field">
+  <label for="expDate">实验日期</label>
+  <div class="date-picker">
+    <input id="expDate" type="date" />
+    <div class="quick-dates">
+      <button type="button" data-offset="0">今天</button>
+      <button type="button" data-offset="-1">昨天</button>
+      <button type="button" data-offset="-7">一周前</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="actions">
+        <button id="saveBtn">💾 保存</button>
+        <button id="analyzeBtn">📊 Analyze</button>
+        <button id="exportBtn">📁 导出</button>
+      </div>
+    </section>
+
+    <!-- 实验记录区 -->
+    <section id="recordsSection" class="note-list">
+      <h2>🧬 实验记录</h2>
+<section class="search-bar">
+  <div class="search-row">
+    <input id="searchInput" type="text" placeholder="🔍 搜索实验标题或内容..." />
+  </div>
+
+  <div class="filter-row">
+    <div class="date-filter">
+      <label>📅 从</label>
+      <input id="startDate" type="date" />
+      <label>至</label>
+      <input id="endDate" type="date" />
+      <button id="filterDateBtn">筛选</button>
+      <button id="clearDateBtn">清除</button>
+    </div>
+  </div>
+</section>
+
+
+      <div id="experimentList" class="experiment-list"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    RetroLab Journal © 2025 | Powered by Grimoire 🧙‍♂️
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
