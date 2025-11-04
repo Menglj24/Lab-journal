@@ -310,17 +310,17 @@ function renderNotes(data) {
     .forEach(note => {
       const div = document.createElement("div");
       div.className = "note-item";
-      div.innerHTML = `
-        <h3>${note.title}</h3>
-        <p>${note.content}</p>
-        <p class="note-meta">🕒 ${new Date(note.date).toLocaleString()}</p>
-        <div class="tags">
-          ${(note.tags || [])
-            .map(t => `<span class="tag" data-tag="${t}">${t}</span>`)
-            .join("")}
-        </div>
-        <button class="delete-btn" data-id="${note.id}">删除</button>
-      `;
+div.innerHTML = `
+  <h3>${note.title}</h3>
+  <p>${note.content}</p>
+  <p>🕒 ${new Date(note.date).toLocaleString()}</p>
+  <div class='tags'>${(note.tags||[]).map(t=>`<span class='tag' data-tag='${t}'>${t}</span>`).join('')}</div>
+  <div class="note-actions">
+    <button class='edit-btn' data-id='${note.id}'>✏️ 编辑</button>
+    <button class='delete-btn' data-id='${note.id}'>🗑️ 删除</button>
+  </div>
+`;
+
       listContainer.appendChild(div);
     });
 
@@ -331,6 +331,25 @@ function renderNotes(data) {
       deleteNote(id);
     });
   });
+
+  // ✏️ 编辑按钮事件
+document.querySelectorAll(".edit-btn").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const id = e.target.dataset.id;
+    const note = notes.find(n => n.id === id);
+    if (!note) return;
+
+    // 将笔记内容填入输入框
+    titleInput.value = note.title;
+    contentInput.value = note.content;
+    tagsInput.value = (note.tags || []).join(", ");
+    dateInput.value = note.date ? note.date.split("T")[0] : "";
+
+    saveBtn.textContent = "💾 更新记录";
+    saveBtn.dataset.editing = id; // 标记为编辑模式
+  });
+});
+
 
   // 🏷️ 标签点击事件绑定
   document.querySelectorAll(".tag").forEach(tag => {
@@ -418,6 +437,26 @@ if (saveBtn) {
     ? tagsInput.value.split(",").map(t => t.trim()).filter(Boolean)
     : [];
   const dateValue = document.getElementById("expDate").value;
+// 🧩 如果是编辑模式
+if (saveBtn.dataset.editing) {
+  const editId = saveBtn.dataset.editing;
+  const idx = notes.findIndex(n => n.id === editId);
+  if (idx !== -1) {
+    notes[idx].title = title;
+    notes[idx].content = content;
+    notes[idx].tags = tags;
+    notes[idx].date = date;
+    saveNotes();
+    renderNotes(notes);
+  }
+  saveBtn.textContent = "💾 保存";
+  delete saveBtn.dataset.editing; // 清除编辑标志
+  titleInput.value = "";
+  contentInput.value = "";
+  tagsInput.value = "";
+  dateInput.value = "";
+  return; // 阻止继续执行“新增”逻辑
+}
 
   if (!title || !content) {
     alert("请输入实验标题与内容！");

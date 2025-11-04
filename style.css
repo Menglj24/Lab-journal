@@ -266,6 +266,22 @@ body {
   color: #fff;
 }
 
+.note-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.edit-btn {
+  background: rgba(0, 255, 120, 0.15);
+  border: 1px solid rgba(0, 255, 120, 0.5);
+  color: #88ffaa;
+}
+.edit-btn:hover {
+  background: rgba(0, 255, 120, 0.4);
+  color: #fff;
+}
+
 
 /* ===== 动画 ===== */
 section, header, footer {
